@@ -1,8 +1,12 @@
-package com.example.demo.mongodb_sample;
+package com.example.demo.mongodb_sample.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.mongodb_sample.entity.StudentEntity;
+import com.example.demo.mongodb_sample.service.StudentService;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,36 +23,35 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @PostMapping
-    public Student create(@RequestBody Student student) {
-        return studentRepository.save(student);
+    public StudentEntity create(@RequestBody StudentEntity student) {
+        return studentService.create(student);
     }
 
     // Read (By ID)
     @GetMapping("/{id}")
-    public Optional<Student> read(@PathVariable String id) {
-        return studentRepository.findById(id);
+    public Optional<StudentEntity> read(@PathVariable String id) {
+        return studentService.getById(id);
     }
 
     // Read (All)
     @GetMapping
-    public List<Student> readAll() {
-        return studentRepository.findAll();
+    public List<StudentEntity> readAll() {
+        return studentService.readAll();
     }
 
     // Update
     @PutMapping("/{id}")
-    public Student update(@PathVariable String id, @RequestBody Student student) {
-        student.setId(id); // 確保更新的是指定 ID 的文檔
-        return studentRepository.save(student);
+    public StudentEntity update(@PathVariable String id, @RequestBody StudentEntity student) {
+        return studentService.update(id, student);
     }
 
     // Delete
     @DeleteMapping("/{id}")
     public String delete(@PathVariable String id) {
-        studentRepository.deleteById(id);
+        studentService.deleteById(id);
         return "Remove id: " + id;
     }
 }

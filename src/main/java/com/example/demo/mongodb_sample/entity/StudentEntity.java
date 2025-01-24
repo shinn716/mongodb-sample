@@ -1,10 +1,10 @@
-package com.example.demo.mongodb_sample;
+package com.example.demo.mongodb_sample.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "students") // 指定集合名稱
-public class Student {
+@Document(collection = "students")
+public class StudentEntity {
     @Id
     private String id;
     private String name;
